@@ -44,4 +44,4 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/employee-api:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/employee-api:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/employee-api:${{ github.sha }} 

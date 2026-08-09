@@ -1,0 +1,60 @@
+services:
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+    depends_on:
+      - employee-api
+
+    networks:
+      - backend
+
+  postgres-db:
+    image: postgres:16
+    container_name: postgres-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: employee_db
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+    networks:
+      - backend
+
+  employee-api:
+    build: .
+    container_name: employee-api
+    restart: unless-stopped
+
+    depends_on:
+      - postgres-db
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      DB_HOST: postgres-db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: employee_db
+
+    networks:
+      - backend
+
+volumes:
+  postgres-data:
+
+networks:
+  backend:

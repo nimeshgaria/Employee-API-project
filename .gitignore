@@ -1,0 +1,8 @@
+*.pem
+create-ec2.ps1
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log

@@ -37,8 +37,8 @@ jobs:
           python -m pytest -v
 
 
-  docker-build:
-    name: Build Docker Image
+  docker:
+    name: Build and Push Docker Image
     needs: test
     runs-on: ubuntu-latest
 
@@ -46,6 +46,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build Docker image
         run: |
-          docker build -t employee-api:${{ github.sha }} .
+          docker build \
+            -t nimesh25/employee-api:${{ github.sha }} \
+            -t nimesh25/employee-api:latest \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push nimesh25/employee-api:${{ github.sha }}
+          docker push nimesh25/employee-api:latest

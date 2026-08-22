@@ -17,6 +17,7 @@ services:
     networks:
       - backend
 
+
   postgres-db:
     image: postgres:16
     container_name: postgres-db
@@ -33,6 +34,7 @@ services:
     networks:
       - backend
 
+
   employee-api:
     image: nimesh25/employee-api:latest
     container_name: employee-api
@@ -40,9 +42,6 @@ services:
 
     depends_on:
       - postgres-db
-
-    ports:
-      - "8000:8000"
 
     environment:
       DB_HOST: postgres-db
@@ -53,8 +52,10 @@ services:
     networks:
       - backend
 
+
 volumes:
   postgres-data:
+
 
 networks:
   backend:

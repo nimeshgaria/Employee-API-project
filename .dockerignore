@@ -1,10 +1,9 @@
+.venv
+__pycache__
+.pytest_cache
 .git
 .gitignore
 .env
-__pycache__/
-*.pyc
-tests/
-.vscode/
-.venv/
-README.md
-
+terraform/.terraform
+terraform/*.tfstate
+terraform/*.tfstate.*

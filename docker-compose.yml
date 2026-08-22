@@ -34,7 +34,7 @@ services:
       - backend
 
   employee-api:
-    build: .
+    image: nimesh25/employee-api:latest
     container_name: employee-api
     restart: unless-stopped
 

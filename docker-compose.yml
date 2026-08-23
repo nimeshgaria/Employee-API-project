@@ -36,7 +36,7 @@ services:
 
 
   employee-api:
-    image: nimesh25/employee-api:latest
+    image: nimesh25/employee-api:${IMAGE_TAG:-latest}
     container_name: employee-api
     restart: unless-stopped
 

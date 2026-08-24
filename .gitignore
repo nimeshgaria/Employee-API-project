@@ -6,3 +6,4 @@ create-ec2.ps1
 *.tfstate.*
 crash.log
 crash.*.log
+employee-api-github-actions

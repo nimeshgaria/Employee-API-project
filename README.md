@@ -28,7 +28,7 @@ echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 export PATH="$HOME/bin:$PATH"
 
 git clone https://github.com/nimeshgaria/Employee-API-project.git
-cd /Em/terraform
+cd Employee-API-project/terraform/
 
 terraform init
 terraform apply
@@ -37,7 +37,7 @@ terraform apply
 In EC2 
 git clone https://github.com/nimeshgaria/Employee-API-project.git
 
-cd Empl
+cd Employee-API-project
 
 sudo docker compose pull
 sudo docker compose up -d
@@ -54,3 +54,5 @@ enter - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMBxaRlC4Fnsfck33hZyUreDVnMq/vrQDv0g
 
 chmod 600 ~/.ssh/authorized_keys
 
+IMP : 
+need to check gi repo -> secret -> ec2 public ip with new ip everytime as it changes

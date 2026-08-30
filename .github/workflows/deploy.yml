@@ -1,0 +1,47 @@
+name: Deploy to EC2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            cd /home/ubuntu/Employee-API-project
+
+            echo "Pulling latest application image..."
+
+            export IMAGE_TAG=${{ github.sha }}
+
+            docker compose pull employee-api
+
+            echo "Starting application..."
+
+            docker compose up -d employee-api
+
+            echo "Waiting for application to become healthy..."
+
+            for i in {1..12}; do
+
+              if curl -fsS http://localhost/health; then
+                echo "Application is healthy!"
+                exit 0
+              fi
+
+              echo "Health check failed. Retrying in 5 seconds..."
+              sleep 5
+
+            done
+
+            echo "Application failed health check!"
+            exit 1

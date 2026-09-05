@@ -1,8 +1,6 @@
 name: CI
 
 on:
-  workflow_dispatch:
-    
   push:
     branches:
       - main
@@ -65,3 +63,26 @@ jobs:
         run: |
           docker push nimesh25/employee-api:${{ github.sha }}
           docker push nimesh25/employee-api:latest
+
+
+  deploy:
+    name: Deploy to EC2
+    needs: docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/Employee-API-project
+
+            export IMAGE_TAG=${{ github.sha }}
+
+            docker compose pull employee-api
+            docker compose up -d employee-api
+
+            docker compose ps

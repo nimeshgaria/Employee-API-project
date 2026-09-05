@@ -18,16 +18,13 @@ class Employee(BaseModel):
 
 
 @app.get("/")
-def home():
-    return {
-        "message": "Welcome to Employee Directory API",
-        "status": "Application is running successfully"
-    }
+def root():
+    return {"message": "Employee Directory API"}
 
 
 @app.get("/health")
 def health():
-    return {"status": "UP"}
+    return {"status": "healthy"}
 
 
 @app.get("/employees")
